@@ -53,6 +53,7 @@ let title = document.querySelector("title");
 title.textContent = "Great Idea! DOM";
 
 //navbar
+let navObj = siteContent["nav"];
 
 let link1 = document.createElement("a");
 document.querySelector("nav").append(link1);
@@ -65,12 +66,13 @@ link2.append("Download");
 let navItems = document.querySelectorAll("nav a");
 
 for (i = 1; i < navItems.length - 1; i++) {
-  navItems[i].innerHTML = siteContent["nav"]["nav-item-" + i.toString(10)];
+  navItems[i].textContent = navObj["nav-item-" + i.toString(10)];
 }
 
 navItems.forEach(item => (item.style.color = "green"));
 
 //cta
+let cta = siteContent["cta"];
 let ctaHeader = document.querySelector("h1");
 let ctaBtn = document.querySelector(".cta-text button");
 let ctaImg = document.querySelector("#cta-img");
@@ -95,41 +97,35 @@ function darkModeToggle() {
   }
 }
 
-ctaHeader.innerHTML = siteContent["cta"]["h1"];
-ctaBtn.textContent = siteContent["cta"]["button"];
+ctaHeader.innerHTML = cta["h1"];
+ctaBtn.textContent = cta["button"];
 ctaImg.src = "img/header-img.png";
 
 //features
 
-let mainContentText = document.querySelectorAll(".text-content");
+let mainContentHeader = document.querySelectorAll(".text-content h4");
+let mainContentText = document.querySelectorAll(".text-content p");
 
-let featureText = mainContentText[0];
-let aboutText = mainContentText[1];
-let servicesText = mainContentText[2];
-let productText = mainContentText[3];
-let visionText = mainContentText[4];
 let mainContentObject = siteContent["main-content"];
 
-featureText.firstElementChild.textContent = mainContentObject["features-h4"];
-featureText.lastElementChild.textContent =
-  mainContentObject["features-content"];
+let mainContentArr = Object.keys(mainContentObject).filter(item =>
+  item.includes("h4")
+);
+let mainContentTxtArr = Object.keys(mainContentObject).filter(item =>
+  item.includes("content")
+);
 
-aboutText.firstElementChild.textContent = mainContentObject["about-h4"];
-aboutText.lastElementChild.textContent = mainContentObject["about-content"];
+for (i = 0; i < mainContentHeader.length; i++) {
+  mainContentHeader[i].textContent = mainContentObject[`${mainContentArr[i]}`];
+}
+for (i = 0; i < mainContentText.length; i++) {
+  mainContentText[i].textContent = mainContentObject[`${mainContentTxtArr[i]}`];
+}
 
 let middleImg = document.querySelector("#middle-img");
 middleImg.src = "img/mid-page-accent.jpg";
 
-servicesText.firstElementChild.textContent = mainContentObject["services-h4"];
-servicesText.lastElementChild.textContent =
-  mainContentObject["services-content"];
-
-productText.firstElementChild.textContent = mainContentObject["product-h4"];
-productText.lastElementChild.textContent = mainContentObject["product-content"];
-
-visionText.firstElementChild.textContent = mainContentObject["vision-h4"];
-visionText.lastElementChild.textContent = mainContentObject["vision-content"];
-
+//contact
 let contactSection = document.querySelector(".contact");
 
 contactSection.firstElementChild.textContent =
