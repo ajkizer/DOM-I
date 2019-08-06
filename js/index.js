@@ -55,19 +55,17 @@ title.textContent = "Great Idea! DOM";
 //navbar
 
 let link1 = document.createElement("a");
-let node1 = document.createTextNode("Blog");
-link1.appendChild(node1);
-document.querySelector("nav").appendChild(link1);
+document.querySelector("nav").append(link1);
+link1.append("Blog");
 
 let link2 = document.createElement("a");
-let node2 = document.createTextNode("Download");
-link2.appendChild(node2);
 document.querySelector("nav").prepend(link2);
+link2.append("Download");
 
 let navItems = document.querySelectorAll("nav a");
-for (i = 0; i < navItems.length - 1; i++) {
-  navItems[i].innerHTML =
-    siteContent["nav"]["nav-item-" + (i + 1).toString(10)];
+
+for (i = 1; i < navItems.length - 1; i++) {
+  navItems[i].innerHTML = siteContent["nav"]["nav-item-" + i.toString(10)];
 }
 
 navItems.forEach(item => (item.style.color = "green"));
@@ -76,6 +74,26 @@ navItems.forEach(item => (item.style.color = "green"));
 let ctaHeader = document.querySelector("h1");
 let ctaBtn = document.querySelector(".cta-text button");
 let ctaImg = document.querySelector("#cta-img");
+
+ctaBtn.addEventListener("click", darkModeToggle);
+let toggle = true;
+
+function darkModeToggle() {
+  const body = document.querySelector("body");
+  if (toggle) {
+    body.style.color = "white";
+    body.style.background = "black";
+    toggle = false;
+    navItems.forEach(item => (item.style.color = "white"));
+    logo.src = "img/logowhite.png";
+  } else {
+    body.style.color = "black";
+    body.style.background = "white";
+    toggle = true;
+    navItems.forEach(item => (item.style.color = "green"));
+    logo.src = "img/logo.png";
+  }
+}
 
 ctaHeader.innerHTML = siteContent["cta"]["h1"];
 ctaBtn.textContent = siteContent["cta"]["button"];
@@ -117,7 +135,8 @@ let contactSection = document.querySelector(".contact");
 contactSection.firstElementChild.textContent =
   siteContent.contact["contact-h4"];
 
-contactSection.childNodes[3].textContent = siteContent.contact["address"];
+contactSection.childNodes[3].innerHTML =
+  "<p>123 Way 456 Street<br>Somewhere,USA</p>";
 
 contactSection.childNodes[5].textContent = siteContent.contact["phone"];
 
